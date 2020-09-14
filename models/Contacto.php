@@ -3,6 +3,8 @@
 namespace app\models;
 
 use Yii;
+use yii\helpers\ArrayHelper;
+use DateTime;
 
 /**
  * This is the model class for table "Contacto".
@@ -45,7 +47,7 @@ class Contacto extends \yii\db\ActiveRecord
             'id' => 'ID',
             'nombre' => 'Nombre',
             'apellidos' => 'Apellidos',
-            'anno_nacimiento' => 'Anno Nacimiento',
+            'anno_nacimiento' => 'Año de nacimiento',
         ];
     }
 
@@ -66,5 +68,39 @@ class Contacto extends \yii\db\ActiveRecord
     public static function find()
     {
         return new ContactoQuery(get_called_class());
+    }
+
+    public function beforeSave($insert)
+    {
+
+        if (!parent::beforeSave($insert)) return false;
+
+        if ($this->anno_nacimiento !== NULL)
+            $this->anno_nacimiento = (new DateTime($this->anno_nacimiento))->format('Y-m-d');
+
+        return true;
+    }
+
+    public function afterFind()
+    {
+
+        parent::afterFind();
+
+        if (!empty($this->anno_nacimiento)) {
+            $this->anno_nacimiento = Yii::$app->formatter->asDateTime($this->anno_nacimiento, 'php:d-m-Y');
+        }
+    }
+
+
+    public function getFullName()
+    {
+        
+        return $this->nombre . ' ' . $this->apellidos . ' (' . $this->anno_nacimiento . ')';
+    }
+
+
+    static function toDropDown()
+    {
+        return  ArrayHelper::map(self::find()->all(), 'id', 'fullName');
     }
 }

@@ -2,7 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-
+use kartik\date\DatePicker;
 /* @var $this yii\web\View */
 /* @var $model app\models\Contacto */
 /* @var $form yii\widgets\ActiveForm */
@@ -16,7 +16,13 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'apellidos')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'anno_nacimiento')->textInput() ?>
+    <?php echo $form->field($model, 'anno_nacimiento')->widget(DatePicker::classname(), [
+        'options' => ['placeholder' => 'Introduce la fecha de nacimiento'],
+        'pluginOptions' => [
+            'autoclose' => true,
+            'format' => 'dd-mm-yyyy'
+        ]
+    ]); ?>
 
     <div class="form-group">
         <?php echo Html::a('Volver sin guardar', ['/contacto/index'], ['class' => 'btn btn-danger']); ?>

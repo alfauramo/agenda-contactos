@@ -3,6 +3,8 @@
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 
+use function PHPSTORM_META\map;
+
 /* @var $this yii\web\View */
 /* @var $model app\models\Telefonos */
 
@@ -31,7 +33,12 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             'prefijo',
             'numero',
-            'contacto_id',
+            [
+                'attribute' => 'contacto_id',
+                'value' => function ($model) {
+                    return $model->contacto->getFullName();
+                }
+            ]
         ],
     ]) ?>
 

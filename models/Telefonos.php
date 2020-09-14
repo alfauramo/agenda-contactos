@@ -45,8 +45,8 @@ class Telefonos extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'prefijo' => 'Prefijo',
-            'numero' => 'Numero',
-            'contacto_id' => 'Contacto ID',
+            'numero' => 'Número',
+            'contacto_id' => 'Contacto',
         ];
     }
 
