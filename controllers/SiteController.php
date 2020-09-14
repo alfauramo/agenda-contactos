@@ -56,12 +56,12 @@ class SiteController extends Controller
 
     /**
      * Displays homepage.
-     *
+     * Modifico el método original para redirigir al site/login
      * @return string
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        return $this->redirect(['/contacto/index']);
     }
 
     /**
@@ -125,4 +125,5 @@ class SiteController extends Controller
     {
         return $this->render('about');
     }
+
 }

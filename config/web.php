@@ -7,6 +7,7 @@ $config = [
     'id' => 'basic',
     'name' => 'Contactos',
     'language' => 'es',
+    'homeUrl' => ['/contacto/index'],
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'aliases' => [

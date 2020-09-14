@@ -64,7 +64,7 @@ class User extends ActiveRecord implements IdentityInterface
         return new UserQuery(get_called_class());
     }
 
-     /**
+    /**
      * Este findByUsername fue modificado para:
      * 1º - Para que en lugar de buscar por username sea por email
      * 2º - Para comprobar si el usuario está activo o no.
@@ -133,7 +133,8 @@ class User extends ActiveRecord implements IdentityInterface
     public function beforeSave($insert)
     {
         if (parent::beforeSave($insert)) {
-
+            if ($this->isNewRecord)
+                $this->token = (new Security)->generateRandomString(24);
             if ($this->isNewRecord || $this->isAttributeChanged('password')) {
                 $this->password = Yii::$app->getSecurity()->generatePasswordHash($this->password);
             }
@@ -142,6 +143,4 @@ class User extends ActiveRecord implements IdentityInterface
         }
         return false;
     }
-
-
 }
