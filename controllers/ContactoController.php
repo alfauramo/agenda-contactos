@@ -78,8 +78,13 @@ class ContactoController extends Controller
     {
         $model = new Contacto();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post())) {
+            if ($model->save()) {
+                Yii::$app->session->setFlash('success', "Contacto creado correctamente.");
+                return $this->redirect(['view', 'id' => $model->id]);
+            } else {
+                Yii::$app->session->setFlash('error', "Contacto no creado.");
+            }
         }
 
         return $this->render('create', [
@@ -98,8 +103,13 @@ class ContactoController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post())) {
+            if ($model->save()) {
+                Yii::$app->session->setFlash('success', "Contacto modificado correctamente.");
+                return $this->redirect(['view', 'id' => $model->id]);
+            } else {
+                Yii::$app->session->setFlash('error', "Contacto no modificado.");
+            }
         }
 
         return $this->render('update', [
@@ -116,7 +126,13 @@ class ContactoController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $model = $this->findModel($id);
+
+        if($model->delete()) {
+            Yii::$app->session->setFlash('success', "Contacto eliminado correctamente.");
+        } else {
+            Yii::$app->session->setFlash('error', "Contacto no eliminado.");
+        }
 
         return $this->redirect(['index']);
     }

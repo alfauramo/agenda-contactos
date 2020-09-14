@@ -14,20 +14,30 @@ use app\models\Contacto;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'prefijo')->textInput() ?>
+    <div class="row">
+        <div class="col-md-6">
+            <?= $form->field($model, 'prefijo')->textInput() ?>
+        </div>
 
-    <?= $form->field($model, 'numero')->textInput(['maxlength' => true]) ?>
-    
-    <?php echo $form->field($model, 'contacto_id')->widget(Select2::classname(), [
-        'language' => 'es',
-        'data' => Contacto::toDropDown(),
-        'options' => [
-            'placeholder' => 'Selecciona un contacto',
-        ],
-        'pluginOptions' => [
-            'allowClear' => true,
-        ],
-    ]); ?>
+        <div class="col-md-6">
+            <?= $form->field($model, 'numero')->textInput(['maxlength' => true]) ?>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <?php echo $form->field($model, 'contacto_id')->widget(Select2::classname(), [
+                'language' => 'es',
+                'data' => Contacto::toDropDown(),
+                'options' => [
+                    'placeholder' => 'Selecciona un contacto',
+                ],
+                'pluginOptions' => [
+                    'allowClear' => true,
+                ],
+            ]); ?>
+        </div>
+    </div>
 
     <div class="form-group">
         <?php echo Html::a('Volver sin guardar', ['/telefonos/index'], ['class' => 'btn btn-danger']); ?>

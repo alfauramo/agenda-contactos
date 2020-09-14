@@ -133,8 +133,7 @@ class User extends ActiveRecord implements IdentityInterface
     public function beforeSave($insert)
     {
         if (parent::beforeSave($insert)) {
-            if ($this->isNewRecord)
-                $this->token = (new Security)->generateRandomString(24);
+                
             if ($this->isNewRecord || $this->isAttributeChanged('password')) {
                 $this->password = Yii::$app->getSecurity()->generatePasswordHash($this->password);
             }

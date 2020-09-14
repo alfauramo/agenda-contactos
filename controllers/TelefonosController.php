@@ -78,8 +78,13 @@ class TelefonosController extends Controller
     {
         $model = new Telefonos();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post())) {
+            if ($model->save()) {
+                Yii::$app->session->setFlash('success', "Teléfono no creado.");
+                return $this->redirect(['view', 'id' => $model->id]);
+            } else {
+                Yii::$app->session->setFlash('error', "Teléfono no creado.");
+            }
         }
 
         return $this->render('create', [
@@ -98,8 +103,13 @@ class TelefonosController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post())) {
+            if ($model->save()) {
+                Yii::$app->session->setFlash('success', "Teléfono modificado correctamente.");
+                return $this->redirect(['view', 'id' => $model->id]);
+            } else {
+                Yii::$app->session->setFlash('error', "Teléfono no modificado.");
+            }
         }
 
         return $this->render('update', [
@@ -116,7 +126,13 @@ class TelefonosController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $model = $this->findModel($id);
+
+        if($model->delete()) {
+            Yii::$app->session->setFlash('success', "Teléfono eliminado correctamente.");
+        } else {
+            Yii::$app->session->setFlash('error', "Teléfono no eliminado.");
+        }
 
         return $this->redirect(['index']);
     }

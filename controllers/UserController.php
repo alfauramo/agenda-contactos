@@ -5,6 +5,7 @@ namespace app\controllers;
 use Yii;
 use app\models\User;
 use app\models\UserSearch;
+use yii\base\Security;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -78,9 +79,15 @@ class UserController extends Controller
     public function actionCreate()
     {
         $model = new User();
-
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        $model->token = (new Security())->generateRandomString(24);
+        if ($model->load(Yii::$app->request->post())) {
+            if ($model->save()) {
+                Yii::$app->session->setFlash('success', "Usuario creado correctamente.");
+                return $this->redirect(['view', 'id' => $model->id]);
+            } else {
+                Yii::$app->session->setFlash('error', "Usuario no creado.");
+            }
+            
         }
 
         return $this->render('create', [
@@ -99,8 +106,14 @@ class UserController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post())){
+            if($model->save()){
+                Yii::$app->session->setFlash('success', "Usuario modificado correctamente.");
+                return $this->redirect(['view', 'id' => $model->id]);
+            } else {
+                Yii::$app->session->setFlash('error', "Usuario no modificado.");
+            }
+            
         }
 
         return $this->render('update', [
@@ -117,7 +130,13 @@ class UserController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $model = $this->findModel($id);
+
+        if($model->delete()) {
+            Yii::$app->session->setFlash('succes', "Usuario eliminado correctament.");
+        } else {
+            Yii::$app->session->setFlash('error', "Usuario no eliminado.");
+        }
 
         return $this->redirect(['index']);
     }
