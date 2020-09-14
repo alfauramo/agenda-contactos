@@ -7,7 +7,7 @@ use yii\grid\GridView;
 /* @var $searchModel app\models\TelefonosSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Telefonos';
+$this->title = 'Teléfonos';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="telefonos-index">
@@ -15,7 +15,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Create Telefonos', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Crear teléfono', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
@@ -24,9 +24,6 @@ $this->params['breadcrumbs'][] = $this->title;
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
-
-            'id',
             'prefijo',
             'numero',
             'contacto_id',

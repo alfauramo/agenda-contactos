@@ -5,8 +5,8 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\Telefonos */
 
-$this->title = 'Create Telefonos';
-$this->params['breadcrumbs'][] = ['label' => 'Telefonos', 'url' => ['index']];
+$this->title = 'Crear';
+$this->params['breadcrumbs'][] = ['label' => 'Teléfonos', 'url' => ['/telefonos/index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="telefonos-create">
